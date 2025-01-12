@@ -8,19 +8,13 @@ import {
   CardActionArea,
 } from '@mui/material';
 import { theme } from '../../styles/theme';
-import StarRateRoundedIcon from '@mui/icons-material/StarRateRounded';
 import { motion } from 'motion/react';
 import { onEnterAnims } from '../../utils/defaultAnims';
+import { useNavigate } from 'react-router';
+import { renderStars } from '../../utils/renderStars';
 
 export const ProductCard = ({ title, price, image }) => {
-  const renderStars = () => {
-    const random_star_number = Math.floor(Math.random() * 2) + 4;
-    const stars = [];
-    for (let i = 0; i < random_star_number; i++) {
-      stars.push(<StarRateRoundedIcon sx={{ color: '#FFAD33' }} />);
-    }
-    return stars;
-  };
+  const nav = useNavigate()
 
   const renderOpinions = () => {
     return (
@@ -57,6 +51,9 @@ export const ProductCard = ({ title, price, image }) => {
       initial={onEnterAnims.initial}
       whileInView={onEnterAnims.animate}
       transition={onEnterAnims.transition}
+      onClick={() => {
+        nav("/detail")
+      }}
     >
       <CardActionArea sx={{ height: 'auto' }}>
         <Chip percentage={20} />

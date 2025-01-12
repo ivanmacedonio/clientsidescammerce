@@ -1,6 +1,6 @@
 import { Box, Button } from '@mui/material';
 
-export const CTAButton = ({ title, color, args }) => {
+export const CTAButton = ({ title, color, args, onClick }) => {
     return (
     <Box>
       <Button
@@ -10,6 +10,7 @@ export const CTAButton = ({ title, color, args }) => {
           padding: "12px 40px",
           ...args
         }}
+        onClick={onClick}
       >
         {title}
       </Button>

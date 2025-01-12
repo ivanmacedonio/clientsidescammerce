@@ -5,6 +5,8 @@ import { Register } from './pages/Register.jsx';
 import { Contact } from './pages/Contact.jsx';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router';
 import { Layout } from './pages/Layout.jsx';
+import { Checkout } from './pages/Checkout.jsx';
+import { Detail } from './pages/Detail.jsx';
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -23,6 +25,22 @@ createRoot(document.getElementById('root')).render(
         element={
           <Layout>
             <Contact />
+          </Layout>
+        }
+      />
+      <Route
+        path="/checkout"
+        element={
+          <Layout>
+            <Checkout />
+          </Layout>
+        }
+      />
+      <Route
+        path="/detail"
+        element={
+          <Layout>
+            <Detail />
           </Layout>
         }
       />
