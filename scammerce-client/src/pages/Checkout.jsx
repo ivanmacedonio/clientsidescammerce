@@ -17,8 +17,12 @@ import visa from '../assets/visa.svg';
 import master from '../assets/master.svg';
 import maestro from '../assets/maestro.svg';
 import paypal from '../assets/paypal.svg';
+import { useEffect } from 'react';
 
 export const Checkout = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const INPUT_OPTIONS = [
     'Nombre completo *',
     'Dirección de facturación *',
@@ -27,9 +31,26 @@ export const Checkout = () => {
     'Numero telefónico *',
   ];
 
+  const CardTextField = ({ placeholder }) => {
+    return (
+      <TextField
+        label={placeholder}
+        variant="outlined"
+        slotProps={{
+          input: {
+            sx: { fontWeight: 400, padding: 0 },
+          },
+          inputLabel: {
+            sx: { fontWeight: 400, fontSize: '15px' },
+          },
+        }}
+      />
+    );
+  };
+
   const CouponRow = () => {
     return (
-      <Box marginY="1rem" display="flex" justifyContent="space-between">
+      <Box marginTop="1rem" display="flex" justifyContent="space-between">
         <TextField
           variant="outlined"
           label="Código de cupón"
@@ -54,14 +75,17 @@ export const Checkout = () => {
         alignItems="center"
         gap={2}
         justifyContent="space-between"
+        sx={{ backgroundColor: 'gray', paddingX: '1rem' }}
       >
         <Box display="flex" alignItems="center" gap={1}>
-          <img src={image_url} alt={title} width="13%" />
-          <Typography fontWeight={400} noWrap>
+          <img src={image_url} alt={title} width="8%" />
+          <Typography fontWeight={400} noWrap fontSize="13px">
             {title}
           </Typography>
         </Box>
-        <Typography fontWeight={400}>${price}</Typography>
+        <Typography fontWeight={400} fontSize="13px">
+          ${price}
+        </Typography>
       </Stack>
     );
   };
@@ -85,11 +109,13 @@ export const Checkout = () => {
 
   const CardForm = () => {
     return (
-      <Box marginY="3rem">
-        <Stack gap={1} width="70%">
-          <BackgroundedInput overText={'Numero'} height="40px" />
-          <BackgroundedInput overText={'Vencimiento'} height="40px" />
-          <BackgroundedInput overText={'Codigo de seguridad'} height="40px" />
+      <Box marginY="2rem">
+        <Stack gap={1} width="50%">
+          <CardTextField placeholder={'Numero'} />
+          <Box display="flex" gap={2} justifyContent="space-between">
+            <CardTextField placeholder={'Vencimiento'} />
+            <CardTextField placeholder={'CVV'} />
+          </Box>
           <CTAButton
             title={'Pagar'}
             color={theme.palette.red}
@@ -141,14 +167,14 @@ export const Checkout = () => {
         Detalles de pago
       </Typography>
       <Stack direction="row" gap={20}>
-        <Box width="50%" marginTop="1rem">
+        <Box width="40%" marginTop="1rem">
           <Stack gap={1.5}>
             {INPUT_OPTIONS.map((input) => {
               return (
                 <BackgroundedInput
                   overText={input}
                   fontSize="15px"
-                  height="3rem"
+                  height="2.2rem"
                 />
               );
             })}

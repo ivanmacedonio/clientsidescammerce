@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router';
 import { Layout } from './pages/Layout.jsx';
 import { Checkout } from './pages/Checkout.jsx';
 import { Detail } from './pages/Detail.jsx';
+import { Shop } from './pages/Shop.jsx';
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -17,6 +18,14 @@ createRoot(document.getElementById('root')).render(
         element={
           <Layout>
             <App />
+          </Layout>
+        }
+      />
+      <Route
+        path="/shop"
+        element={
+          <Layout>
+            <Shop />
           </Layout>
         }
       />

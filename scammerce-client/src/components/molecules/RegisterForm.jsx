@@ -3,14 +3,31 @@ import { CTAButton } from '../atoms/CTAButton';
 import { SignInput } from '../atoms/SignInput';
 import { theme } from '../../styles/theme';
 import { NavLink } from 'react-router';
+import { smoothTextEnterAnims } from '../../utils/defaultAnims';
+import { motion } from 'motion/react';
 
 export const RegisterForm = () => {
   return (
     <Box width="50%">
-      <Typography variant="h1" fontWeight={400}>
+      <Typography
+        variant="h1"
+        fontWeight={400}
+        component={motion.h1}
+        initial={smoothTextEnterAnims.initial}
+        animate={smoothTextEnterAnims.animate}
+        transition={smoothTextEnterAnims.transition}
+      >
         Crear una cuenta
       </Typography>
-      <Typography variant="h2" color="#C9C9C9" fontWeight={400}>
+      <Typography
+        variant="h2"
+        color="#C9C9C9"
+        fontWeight={400}
+        component={motion.h2}
+        initial={smoothTextEnterAnims.initial}
+        animate={smoothTextEnterAnims.animate}
+        transition={smoothTextEnterAnims.transition}
+      >
         Completa los campos y accede a las mejores ofertas
       </Typography>
       <Stack marginTop="3rem" gap={2}>

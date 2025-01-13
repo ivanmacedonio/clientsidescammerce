@@ -2,8 +2,12 @@ import { Box, Divider } from '@mui/material';
 import { CategorySection } from '../components/molecules/CategorySection';
 import { ProductList } from '../components/molecules/ProductList';
 import { Conditions } from '../components/molecules/Conditions';
+import { useEffect } from 'react';
 
 export const Home = () => {
+  useEffect(() => {
+    window.scrollTo(0,0)
+  }, [])
   return (
     <>
       <Box sx={{ padding: '0 15rem', justifyContent: 'center' }}>

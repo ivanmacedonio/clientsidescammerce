@@ -16,7 +16,7 @@ export const Header = () => {
   const LINKS = [
     { title: 'Inicio', route: '/' },
     { title: 'Contacto', route: '/contact' },
-    { title: 'Tienda', route: '/' },
+    { title: 'Tienda', route: '/shop' },
   ];
   const TITLE = 'MYYMERCHANT';
   const TEXTFIELD_STYLE = {

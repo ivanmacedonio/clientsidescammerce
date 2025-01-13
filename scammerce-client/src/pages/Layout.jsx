@@ -7,7 +7,7 @@ export const Layout = ({ children }) => {
     <ThemeProvider theme={theme}>
       <Header />
       {children}
-      <Footer />
+      {/* <Footer /> */}
     </ThemeProvider>
   );
 };

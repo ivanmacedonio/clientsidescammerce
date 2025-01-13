@@ -1,6 +1,12 @@
-import { TextField, Typography } from '@mui/material';
+import { TextField, Typography, Box } from '@mui/material';
 
-export const BackgroundedInput = ({ label, multiline, overText, fontSize, height }) => {
+export const BackgroundedInput = ({
+  label,
+  multiline,
+  overText,
+  fontSize,
+  height,
+}) => {
   const TEXTFIELD_STYLE = {
     '& .MuiOutlinedInput-root': {
       '&:hover fieldset': {
@@ -17,7 +23,11 @@ export const BackgroundedInput = ({ label, multiline, overText, fontSize, height
   };
   return (
     <>
-      {overText && <Typography fontWeight={400} fontSize="15px" sx={{color: "#838383"}}>{overText}</Typography>}
+      {overText && (
+        <Typography fontWeight={400} fontSize="15px" sx={{ color: '#838383' }}>
+          {overText}
+        </Typography>
+      )}
       <TextField
         focused={false}
         label={overText ? '' : label}
@@ -25,6 +35,7 @@ export const BackgroundedInput = ({ label, multiline, overText, fontSize, height
         multiline={multiline}
         autoComplete="off"
         sx={TEXTFIELD_STYLE}
+        fullWidth
         slotProps={{
           input: {
             sx: { fontWeight: 400, fontSize: fontSize, height: height },
