@@ -14,9 +14,13 @@ export const CategorySection = () => {
   return (
     <Box display="flex">
       <Stack gap={2} width="12vw" padding="3rem 0">
-        {CATEGORY_OPTIONS.map((option) => {
+        {CATEGORY_OPTIONS.map((option, index) => {
           return (
-            <Typography variant="body2" sx={{ fontWeight: 400 }} component={motion.body}>
+            <Typography
+              key={index}
+              sx={{ fontWeight: 400, fontSize: '14px' }}
+              component={motion.p}
+            >
               {option}
             </Typography>
           );

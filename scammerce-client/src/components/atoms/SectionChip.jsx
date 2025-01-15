@@ -15,7 +15,7 @@ export const SectionChip = ({ title }) => {
   return (
     <Stack direction="row" alignItems="center" gap={2}>
       {square}
-      <Typography variant='body1' component={motion.body}  sx={{ color: color }}>{title}</Typography>
+      <Typography variant='body1' component={motion.p}  sx={{ color: color }}>{title}</Typography>
     </Stack>
   );
 };

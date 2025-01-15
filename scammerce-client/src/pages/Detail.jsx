@@ -10,12 +10,14 @@ import { useEffect } from 'react';
 import { onEnterAnims } from '../utils/defaultAnims';
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
 import KeyboardReturnOutlinedIcon from '@mui/icons-material/KeyboardReturnOutlined';
+import { useParams } from 'react-router';
 
 export const Detail = () => {
   const nav = useNavigate();
+  const { shop_id } = useParams();
   useEffect(() => {
-    window.scrollTo(0,0)
-  }, [])
+    window.scrollTo(0, 0);
+  }, []);
 
   const GeneralInfoBox = () => {
     return (
@@ -104,7 +106,7 @@ export const Detail = () => {
               title={'Comprar'}
               color={theme.palette.red}
               onClick={() => {
-                nav('/checkout');
+                nav(`/${shop_id}/checkout`);
               }}
             />
             <GeneralInfoBox />

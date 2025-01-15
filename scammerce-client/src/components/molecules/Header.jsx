@@ -7,16 +7,18 @@ import {
   Divider,
   Button,
 } from '@mui/material';
-import { NavLink } from 'react-router';
+import { NavLink, useParams } from 'react-router';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router';
 
 export const Header = () => {
   const nav = useNavigate();
+  const { shop_id } = useParams();
+
   const LINKS = [
-    { title: 'Inicio', route: '/' },
-    { title: 'Contacto', route: '/contact' },
-    { title: 'Tienda', route: '/shop' },
+    { title: 'Inicio', route: `/${shop_id}/` },
+    { title: 'Contacto', route: `/${shop_id}/contact` },
+    { title: 'Tienda', route: `/${shop_id}/shop` },
   ];
   const TITLE = 'MYYMERCHANT';
   const TEXTFIELD_STYLE = {
@@ -35,6 +37,7 @@ export const Header = () => {
     fontWeight: 600,
     textDecoration: 'underline',
     marginLeft: '2rem',
+    cursor: "pointer"
   };
   return (
     <>
@@ -47,7 +50,7 @@ export const Header = () => {
       >
         <Typography sx={{ color: 'white', fontSize: '12px' }} variant="body2">
           ¡Aprovecha las ofertas semanales! - OFF 50%!{' '}
-          <Typography variant="p" sx={P_STYLES}>
+          <Typography variant="p" sx={P_STYLES} component={"span"} onClick={() => {nav(`/${shop_id}/shop`)}}>
             Ir a la tienda
           </Typography>
         </Typography>
@@ -101,7 +104,7 @@ export const Header = () => {
             variant="outlined"
             sx={{ border: 'solid 1px #DB4444', color: '#DB4444' }}
             onClick={() => {
-              nav('/login');
+              nav(`/${shop_id}/login`);
             }}
           >
             Iniciar Sesión

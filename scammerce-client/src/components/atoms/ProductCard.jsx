@@ -10,12 +10,12 @@ import {
 import { theme } from '../../styles/theme';
 import { motion } from 'motion/react';
 import { onEnterAnims } from '../../utils/defaultAnims';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { renderStars } from '../../utils/renderStars';
 
 export const ProductCard = ({ title, price, image }) => {
-  const nav = useNavigate()
-
+  const nav = useNavigate();
+  const { shop_id } = useParams();
   const renderOpinions = () => {
     return (
       <Typography variant="body2" fontWeight={600} color="rgb(153, 152, 152)">
@@ -52,7 +52,7 @@ export const ProductCard = ({ title, price, image }) => {
       whileInView={onEnterAnims.animate}
       transition={onEnterAnims.transition}
       onClick={() => {
-        nav("/detail")
+        nav(`/${shop_id}/detail`);
       }}
     >
       <CardActionArea sx={{ height: 'auto' }}>
