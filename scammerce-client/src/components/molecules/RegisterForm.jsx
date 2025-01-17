@@ -36,7 +36,6 @@ export const RegisterForm = () => {
         formik.setFieldError('password_2', 'Las Contraseñas deben ser iguales');
         return;
       }
-      console.log(values)
       const { status } = await register(values, shop_id);
       if (status < 299) {
         setTimeout(() => {

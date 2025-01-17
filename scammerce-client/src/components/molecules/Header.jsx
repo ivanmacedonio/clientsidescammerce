@@ -10,10 +10,18 @@ import {
 import { NavLink, useParams } from 'react-router';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router';
+import { useAuthStore } from '../../store/useAuthStore';
+import { useEffect, useState } from 'react';
 
 export const Header = () => {
   const nav = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { shop_id } = useParams();
+  const { token } = useAuthStore();
+
+  useEffect(() => {
+    setIsAuthenticated(Boolean(token));
+  }, [token]);
 
   const LINKS = [
     { title: 'Inicio', route: `/${shop_id}/` },
@@ -37,7 +45,7 @@ export const Header = () => {
     fontWeight: 600,
     textDecoration: 'underline',
     marginLeft: '2rem',
-    cursor: "pointer"
+    cursor: 'pointer',
   };
   return (
     <>
@@ -50,7 +58,14 @@ export const Header = () => {
       >
         <Typography sx={{ color: 'white', fontSize: '12px' }} variant="body2">
           ¡Aprovecha las ofertas semanales! - OFF 50%!{' '}
-          <Typography variant="p" sx={P_STYLES} component={"span"} onClick={() => {nav(`/${shop_id}/shop`)}}>
+          <Typography
+            variant="p"
+            sx={P_STYLES}
+            component={'span'}
+            onClick={() => {
+              nav(`/${shop_id}/shop`);
+            }}
+          >
             Ir a la tienda
           </Typography>
         </Typography>
@@ -103,11 +118,12 @@ export const Header = () => {
           <Button
             variant="outlined"
             sx={{ border: 'solid 1px #DB4444', color: '#DB4444' }}
+            disabled={isAuthenticated}
             onClick={() => {
               nav(`/${shop_id}/login`);
             }}
           >
-            Iniciar Sesión
+            {isAuthenticated ? 'Bienvenido' : 'Iniciar Sesión'}
           </Button>
         </Stack>
       </Box>

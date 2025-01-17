@@ -22,8 +22,8 @@ const ROUTES = [
   { path: '/:shop_id/', component: <App /> },
   { path: '/:shop_id/shop', component: <Shop /> },
   { path: '/:shop_id/contact', component: <Contact /> },
-  { path: '/:shop_id/checkout', component: <Checkout /> },
-  { path: '/:shop_id/detail', component: <Detail /> },
+  { path: '/:shop_id/checkout/:product_id', component: <Checkout /> },
+  { path: '/:shop_id/detail/:product_id', component: <Detail /> },
   { path: '/:shop_id/login', component: <Login /> },
   { path: '/:shop_id/register', component: <Register /> },
 ];

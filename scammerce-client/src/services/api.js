@@ -2,7 +2,7 @@ import axios from 'axios';
 
 let AxiosInstance = null;
 
-export const getAxiosInstance = (shop_id = null, token = null) => {
+export const getAxiosInstance = () => {
   if (AxiosInstance) {
     return AxiosInstance;
   }

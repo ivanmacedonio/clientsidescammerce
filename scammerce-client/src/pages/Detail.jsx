@@ -6,18 +6,43 @@ import { theme } from '../styles/theme';
 import { useNavigate } from 'react-router';
 import { ProductList } from '../components/molecules/ProductList';
 import { motion } from 'motion/react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { onEnterAnims } from '../utils/defaultAnims';
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
 import KeyboardReturnOutlinedIcon from '@mui/icons-material/KeyboardReturnOutlined';
 import { useParams } from 'react-router';
+import { useProductStore } from '../store/useProductStore';
+import { useAuthStore } from '../store/useAuthStore';
 
 export const Detail = () => {
-  const nav = useNavigate();
+  const [product, setProduct] = useState([]);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const { token } = useAuthStore();
+  const { product_id } = useParams();
+  const { getProductById, isLoading } = useProductStore();
   const { shop_id } = useParams();
+  const nav = useNavigate();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    setIsAuthenticated(Boolean(token));
+  }, [isAuthenticated]);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const productResponse = await getProductById(product_id);
+      if (productResponse?.status > 300) {
+        nav('/not-found');
+        return;
+      }
+      setProduct(productResponse);
+    };
+    fetchProduct();
+  }, [products]);
 
   const GeneralInfoBox = () => {
     return (
@@ -71,8 +96,8 @@ export const Detail = () => {
           }}
         >
           <motion.img
-            src={products[0].image}
-            alt={products[0].title}
+            src={product?.image_url}
+            alt={product?.name}
             initial={onEnterAnims.initial}
             animate={onEnterAnims.animate}
             transition={onEnterAnims.transition}
@@ -80,7 +105,7 @@ export const Detail = () => {
         </Box>
         <Stack width="50%" gap={1}>
           <Typography fontWeight={500} fontSize="1.2rem">
-            {products[0].title}
+            {product?.name}
           </Typography>
           <Stack direction="row" gap={1} alignItems="center">
             <Stack direction="row" gap={0}>
@@ -92,21 +117,19 @@ export const Detail = () => {
             </Typography>
           </Stack>
           <Typography fontWeight={400} fontSize="1.3rem">
-            $ {products[0].price}.00
+            $ {product?.price}.00
           </Typography>
           <Typography fontWeight={400} fontSize="14px" marginTop="0.8rem">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Pariatur
-            atque error ipsum officia debitis illo praesentium animi earum
-            dolorem quis aliquam esse illum provident voluptatibus reiciendis,
-            ipsa fugit nobis blanditiis?
+            {product?.description}
           </Typography>
           <Divider sx={{ marginY: '1.5rem' }} />
           <Box alignItems="center">
             <CTAButton
-              title={'Comprar'}
+              disabled={!isAuthenticated}
+              title={isAuthenticated ? 'Comprar' : 'Debes iniciar sesión'}
               color={theme.palette.red}
               onClick={() => {
-                nav(`/${shop_id}/checkout`);
+                nav(`/${shop_id}/checkout/${product_id}`);
               }}
             />
             <GeneralInfoBox />
@@ -114,7 +137,7 @@ export const Detail = () => {
         </Stack>
       </Box>
 
-      <ProductList slice_in={4} chip_title={'Podría interesarte'} />
+      <ProductList from={0} to={10} chip_title={'Podría interesarte'} />
     </Box>
   );
 };

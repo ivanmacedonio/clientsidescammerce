@@ -14,12 +14,13 @@ export const useShopStore = create((set) => ({
       );
       set({
         isValid: response?.status == 200,
-        isLoading: false,
         shop_id: shop_id,
       });
     } catch (error) {
-      console.log(error)
-      set({ isValid: false, isLoading: false, shop_id: null });
+      console.log(error);
+      set({ isValid: false, shop_id: null });
+    } finally {
+      set({ isLoading: false });
     }
   },
 }));

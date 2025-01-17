@@ -2,10 +2,16 @@ import { TextField, Typography, Box } from '@mui/material';
 
 export const BackgroundedInput = ({
   label,
+  error,
+  helperText,
+  name,
+  type,
+  value,
   multiline,
   overText,
   fontSize,
   height,
+  onChange,
 }) => {
   const TEXTFIELD_STYLE = {
     '& .MuiOutlinedInput-root': {
@@ -29,6 +35,12 @@ export const BackgroundedInput = ({
         </Typography>
       )}
       <TextField
+        onChange={onChange}
+        error={error}
+        helperText={helperText}
+        name={name}
+        type={type}
+        value={value}
         focused={false}
         label={overText ? '' : label}
         variant="outlined"

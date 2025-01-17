@@ -1,20 +1,28 @@
 import { Box, Stack, Typography } from '@mui/material';
 import { SectionChip } from '../atoms/SectionChip';
 import { ProductCard } from '../atoms/ProductCard';
-import { products } from '../../mocks/products';
 import { CTAButton } from '../atoms/CTAButton';
 import { theme } from '../../styles/theme';
 import { CustomCountdown } from './Countdown';
 import { useNavigate } from 'react-router';
+import { useProductStore } from '../../store/useProductStore';
+import { useEffect } from 'react';
 
 export const ProductList = ({
   chip_title,
   category_title,
   cta_text,
-  slice_in,
+  from,
+  to,
   hasCountdown,
 }) => {
-  const nav = useNavigate()
+  const nav = useNavigate();
+  const { products, getProducts, isLoading } = useProductStore();
+
+  useEffect(() => {
+    getProducts();
+  }, [products]);
+
   return (
     <Stack gap={2} sx={{ marginTop: '4rem' }}>
       {chip_title && <SectionChip title={chip_title} />}
@@ -27,18 +35,27 @@ export const ProductList = ({
         </Box>
       )}
       <Stack direction="row" gap={4} flexWrap="wrap" marginTop="2rem">
-        {products?.slice(0, slice_in).map((product, index) => (
+        {products?.slice(from, to).map((product, index) => (
           <ProductCard
             key={index}
-            title={product.title}
-            image={product.image}
+            product_id={product.id}
+            title={product.name}
+            is_offer={product.is_offer}
+            discount={product.discount}
+            image={product.image_url}
             price={product.price}
           />
         ))}
       </Stack>
       {cta_text && (
         <Box display="flex" justifyContent="center" margin="2rem 0">
-          <CTAButton color={theme.palette.red} title={cta_text} onClick={() => {nav("/shop")}} />
+          <CTAButton
+            color={theme.palette.red}
+            title={cta_text}
+            onClick={() => {
+              nav('/shop');
+            }}
+          />
         </Box>
       )}
     </Stack>

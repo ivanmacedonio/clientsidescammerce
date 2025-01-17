@@ -13,9 +13,10 @@ import { onEnterAnims } from '../../utils/defaultAnims';
 import { useNavigate, useParams } from 'react-router';
 import { renderStars } from '../../utils/renderStars';
 
-export const ProductCard = ({ title, price, image }) => {
+export const ProductCard = ({ title, price, image, is_offer, discount, product_id }) => {
   const nav = useNavigate();
   const { shop_id } = useParams();
+
   const renderOpinions = () => {
     return (
       <Typography variant="body2" fontWeight={600} color="rgb(153, 152, 152)">
@@ -24,7 +25,7 @@ export const ProductCard = ({ title, price, image }) => {
     );
   };
 
-  const Chip = ({ percentage }) => {
+  const DiscountChip = () => {
     return (
       <Box
         sx={{
@@ -37,7 +38,7 @@ export const ProductCard = ({ title, price, image }) => {
           variant="body1"
           sx={{ color: 'white', fontWeight: 400, fontSize: '12px' }}
         >
-          -{percentage}%
+          -{discount}%
         </Typography>
       </Box>
     );
@@ -52,11 +53,11 @@ export const ProductCard = ({ title, price, image }) => {
       whileInView={onEnterAnims.animate}
       transition={onEnterAnims.transition}
       onClick={() => {
-        nav(`/${shop_id}/detail`);
+        nav(`/${shop_id}/detail/${product_id}`);
       }}
     >
       <CardActionArea sx={{ height: 'auto' }}>
-        <Chip percentage={20} />
+        {!!is_offer && <DiscountChip />}
         <CardMedia
           component="img"
           sx={{
@@ -82,17 +83,19 @@ export const ProductCard = ({ title, price, image }) => {
             >
               ${price}
             </Typography>
-            <Typography
-              variant="body1"
-              sx={{
-                fontWeight: 500,
-                color: '#696969',
-                fontSize: '15px',
-                textDecoration: 'line-through',
-              }}
-            >
-              ${price}
-            </Typography>
+            {!!is_offer && (
+              <Typography
+                variant="body1"
+                sx={{
+                  fontWeight: 500,
+                  color: '#696969',
+                  fontSize: '15px',
+                  textDecoration: 'line-through',
+                }}
+              >
+                ${price - (price * discount) / 100}
+              </Typography>
+            )}
           </Stack>
           <Stack direction="row" display="flex" alignItems="center">
             {renderStars()} {renderOpinions()}
