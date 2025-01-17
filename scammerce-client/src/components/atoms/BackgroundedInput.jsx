@@ -24,7 +24,6 @@ export const BackgroundedInput = ({
         border: 'none',
       },
     },
-    backgroundColor: 'gray',
     paddingBottom: multiline ? '5rem' : 0,
   };
   return (
@@ -50,7 +49,7 @@ export const BackgroundedInput = ({
         fullWidth
         slotProps={{
           input: {
-            sx: { fontWeight: 400, fontSize: fontSize, height: height },
+            sx: { fontWeight: 400, fontSize: fontSize, height: height, backgroundColor: "gray" },
           },
           inputLabel: {
             sx: { fontWeight: 400 },

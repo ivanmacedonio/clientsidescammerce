@@ -28,6 +28,16 @@ export const Checkout = () => {
   const { storagedProduct, executePayment, isLoading } = useProductStore();
   const { email } = useAuthStore();
 
+  const handleVtoChange = (e) => {
+    const inputValue = e.target.value.replace(/\D/g, '').slice(0, 4);
+    let formattedValue = inputValue;
+
+    if (formattedValue.length > 2) {
+      formattedValue = formattedValue.slice(0, 2) + '/' + formattedValue.slice(2, 4);
+    }
+    formik.setFieldValue("Vto", formattedValue)
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -233,21 +243,23 @@ export const Checkout = () => {
                 />
                 <Box display="flex" gap={2} justifyContent="space-between">
                   <TextField
-                    onChange={formik.handleChange}
+                    onChange={handleVtoChange}
                     label={'Vencimiento'}
                     value={formik.values.Vto}
                     error={!!formik.touched.Vto && !!formik.errors.Vto}
                     helperText={!!formik.errors.Vto && formik.errors.Vto}
                     name="Vto"
-                    type="date"
                     variant="outlined"
                     slotProps={{
+                      htmlInput: {
+                        maxLength: 5,
+                        placeholder: "MM/YYYY"
+                      },
                       input: {
                         sx: { fontWeight: 400, padding: 0 },
                       },
                       inputLabel: {
                         sx: { fontWeight: 400, fontSize: '15px' },
-                        shrink: true
                       },
                     }}
                   />
@@ -262,7 +274,7 @@ export const Checkout = () => {
                     variant="outlined"
                     slotProps={{
                       input: {
-                        sx: { fontWeight: 400, padding: 0, width: "50%" },
+                        sx: { fontWeight: 400, padding: 0, width: '50%' },
                       },
                       inputLabel: {
                         sx: { fontWeight: 400, fontSize: '15px' },
