@@ -10,15 +10,28 @@ import { smoothTextEnterAnims } from '../utils/defaultAnims';
 import { motion } from 'motion/react';
 import { ProductList } from '../components/molecules/ProductList';
 import { useState, useEffect } from 'react';
+import { useProductStore } from '../store/useProductStore';
 
 export const Shop = () => {
+  const { getCategories, getProductsByCat, products, categories, isLoading } =
+    useProductStore();
+
+  const [selectedCategory, setSelectedCategory] = useState("");
+
   useEffect(() => {
-    window.scrollTo(0,0)
-  }, [])
-  const [selectedCategory, setSelectedCategory] = useState();
+    window.scrollTo(0, 0);
+    getCategories();
+  }, []);
+
+  useEffect(() => {
+    if (!!selectedCategory) {
+      getProductsByCat(selectedCategory);
+    }
+  }, [selectedCategory]);
+
   const CategorySelector = () => {
     return (
-      <FormControl sx={{marginTop: "2rem", width: "20%"}}>
+      <FormControl sx={{ marginTop: '2rem', width: '20%' }}>
         <InputLabel>Categoría</InputLabel>
         <Select
           label="Categoría"
@@ -28,13 +41,17 @@ export const Shop = () => {
           }}
           slotProps={{
             input: {
-                sx: {}
-            }
+              sx: {},
+            },
           }}
         >
-          <MenuItem value="Celulares">Celulares</MenuItem>
-          <MenuItem value="Monitores">Monitores</MenuItem>
-          <MenuItem value="Perifericos">Perifericos</MenuItem>
+          {categories.map((item, index) => {
+            return (
+              <MenuItem key={index} value={item.id}>
+                {item.name}
+              </MenuItem>
+            );
+          })}
         </Select>
       </FormControl>
     );
@@ -64,7 +81,7 @@ export const Shop = () => {
         Explora una selección única en nuestra tienda.
       </Typography>
       <CategorySelector />
-      <ProductList />
+      <ProductList products={products} />
     </Box>
   );
 };

@@ -10,11 +10,18 @@ export const Home = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const { getProducts, products } = useProductStore();
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
   return (
     <>
       <Box sx={{ padding: '0 15rem', justifyContent: 'center' }}>
-        <CategorySection />
+        {/* <CategorySection /> */}
         <ProductList
+          products={products}
           hasCountdown={true}
           chip_title={'Hot Sales!'}
           category_title={'Ventas Flash'}
@@ -24,12 +31,13 @@ export const Home = () => {
         />
         <Divider />
         <ProductList
+          products={products}
           hasCountdown={false}
           chip_title={'Más Productos!'}
           category_title={'Explorar la tienda'}
           cta_text={'Ver todos los productos'}
           from={10}
-          to={25}
+          to={30}
         />
         <Divider />
         <Conditions />

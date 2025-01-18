@@ -5,10 +5,9 @@ import { CTAButton } from '../atoms/CTAButton';
 import { theme } from '../../styles/theme';
 import { CustomCountdown } from './Countdown';
 import { useNavigate } from 'react-router';
-import { useProductStore } from '../../store/useProductStore';
-import { useEffect } from 'react';
 
 export const ProductList = ({
+  products,
   chip_title,
   category_title,
   cta_text,
@@ -17,11 +16,6 @@ export const ProductList = ({
   hasCountdown,
 }) => {
   const nav = useNavigate();
-  const { products, getProducts, isLoading } = useProductStore();
-
-  useEffect(() => {
-    getProducts();
-  }, [products]);
 
   return (
     <Stack gap={2} sx={{ marginTop: '4rem' }}>

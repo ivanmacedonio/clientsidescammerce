@@ -5,11 +5,19 @@ import { theme } from '../styles/theme';
 import { motion } from 'motion/react';
 import { smoothTextEnterAnims } from '../utils/defaultAnims';
 import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 export const Contact = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const handleSubmit = () => {
+    toast.success('Mensaje enviado exitosamente');
+    setTimeout(() => {
+      window.location.reload();
+    }, 1200);
+  };
   return (
     <Box sx={{ padding: '8vh 20vw' }}>
       <Typography
@@ -40,7 +48,12 @@ export const Contact = () => {
         </Stack>
         <BackgroundedInput label={'Mensaje'} multiline={true} />
         <Box justifyContent="end" display="flex">
-          <CTAButton color={theme.palette.red} title={'Enviar'} />
+          <CTAButton
+            color={theme.palette.red}
+            title={'Enviar'}
+            type={'submit'}
+            onClick={handleSubmit}
+          />
         </Box>
       </Stack>
     </Box>

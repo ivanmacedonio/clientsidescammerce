@@ -20,13 +20,15 @@ export const Detail = () => {
 
   const { token } = useAuthStore();
   const { product_id } = useParams();
-  const { getProductById, isLoading } = useProductStore();
+  const { getProductById, isLoading, products, getProducts } =
+    useProductStore();
   const { shop_id } = useParams();
   const nav = useNavigate();
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    getProducts();
+  }, [product_id]);
 
   useEffect(() => {
     setIsAuthenticated(Boolean(token));
@@ -42,7 +44,7 @@ export const Detail = () => {
       setProduct(productResponse);
     };
     fetchProduct();
-  }, [products]);
+  }, [product_id]);
 
   const GeneralInfoBox = () => {
     return (
@@ -96,6 +98,7 @@ export const Detail = () => {
           }}
         >
           <motion.img
+            width={'100%'}
             src={product?.image_url}
             alt={product?.name}
             initial={onEnterAnims.initial}
@@ -137,7 +140,12 @@ export const Detail = () => {
         </Stack>
       </Box>
 
-      <ProductList from={0} to={10} chip_title={'Podría interesarte'} />
+      <ProductList
+        from={0}
+        to={10}
+        chip_title={'Podría interesarte'}
+        products={products}
+      />
     </Box>
   );
 };

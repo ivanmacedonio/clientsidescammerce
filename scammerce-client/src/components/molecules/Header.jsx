@@ -9,15 +9,39 @@ import {
 } from '@mui/material';
 import { NavLink, useParams } from 'react-router';
 import SearchIcon from '@mui/icons-material/Search';
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import { useAuthStore } from '../../store/useAuthStore';
+import { useProductStore } from '../../store/useProductStore';
 import { useEffect, useState } from 'react';
+import { useRef } from 'react';
 
 export const Header = () => {
   const nav = useNavigate();
+  const location = useLocation();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { shop_id } = useParams();
   const { token } = useAuthStore();
+  const debounceTimeout = useRef(null);
+  const { getProducts } = useProductStore();
+
+  const handleRedirectInSearch = () => {
+    const { pathname } = location;
+    if (!pathname.includes('shop')) {
+      nav(`/${shop_id}/shop`);
+    }
+  };
+
+  const handleSearch = (e) => {
+    const { value } = e.target;
+
+    if (debounceTimeout.current) {
+      clearTimeout(debounceTimeout.current);
+    }
+
+    debounceTimeout.current = setTimeout(() => {
+      getProducts(value)
+    }, 800);
+  };
 
   useEffect(() => {
     setIsAuthenticated(Boolean(token));
@@ -28,7 +52,7 @@ export const Header = () => {
     { title: 'Contacto', route: `/${shop_id}/contact` },
     { title: 'Tienda', route: `/${shop_id}/shop` },
   ];
-  const TITLE = 'MYYMERCHANT';
+  const TITLE = shop_id;
   const TEXTFIELD_STYLE = {
     '& .MuiOutlinedInput-root': {
       '&:hover fieldset': {
@@ -97,6 +121,8 @@ export const Header = () => {
           <TextField
             placeholder="Busca un producto..."
             sx={TEXTFIELD_STYLE}
+            onClick={handleRedirectInSearch}
+            onChange={handleSearch}
             focused={false}
             slotProps={{
               input: {
